@@ -1,0 +1,63 @@
+import datetime
+
+
+class Employee:
+    raise_amount = 1.05  # class variable (5% raise)
+    num_employees = 0    # count how many employees
+
+    def __init__(self, first, last, pay):
+        self.first = first
+        self.last = last
+        self.pay = pay
+
+        Employee.num_employees += 1
+
+    def fullname(self):
+        return f"{self.first} {self.last}"
+
+    def apply_raise(self):
+        self.pay = int(self.pay * self.raise_amount)
+
+    @classmethod
+    def set_raise_amount(cls, amount):
+        """Set the class variable raise_amount for the class and all instances that use it."""
+        cls.raise_amount = amount
+
+    @classmethod
+    def from_string(cls, emp_str):
+        """Alternative constructor: create an Employee from a string like 'John-Doe-70000'."""
+        first, last, pay = emp_str.split("-")
+        pay = int(pay)
+        return cls(first, last, pay)
+
+    @staticmethod
+    def is_workday(day):
+        """Static method: doesn't use class or instance. Just utility."""
+        import datetime
+        # day is a datetime.date object
+        return day.weekday() < 5  # 0 = Monday, 4 = Friday => True if weekday
+
+# --- Usage examples ---
+
+
+# Normal creation
+emp1 = Employee("Ali", "Khan", 50000)
+emp2 = Employee("Sara", "Ahmed", 60000)
+
+# Access class variable
+print("Before change:", Employee.raise_amount,
+      emp1.raise_amount, emp2.raise_amount)
+
+# Change raise_amount via class method
+Employee.set_raise_amount(1.10)
+print("After change:", Employee.raise_amount,
+      emp1.raise_amount, emp2.raise_amount)
+
+# Alternative constructor from string
+emp_str = "Hassan-Navid-70000"
+emp3 = Employee.from_string(emp_str)
+print("emp3:", emp3.fullname(), emp3.pay)
+
+# Static method usage
+my_date = datetime.date(2025, 10, 11)  # example
+print("Is workday?", Employee.is_workday(my_date))  # True if weekday
