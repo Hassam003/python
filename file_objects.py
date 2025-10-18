@@ -1,7 +1,3 @@
-# ================================================
-# File Objects — Reading & Writing in Python
-# ================================================
-
 # Assume we have a file called "test.txt" in the same directory with some lines of text.
 
 # --- Opening and reading from a file (manual way) ---
